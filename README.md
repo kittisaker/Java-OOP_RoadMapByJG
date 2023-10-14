@@ -1,13 +1,104 @@
-# Java-OOP_RoadMapByJG : Chapter 1 What Is an Object in Java
+# Java-OOP_RoadMapByJG : Chapter 2 What is Class in Java
 
-## How to Declare, Create and Initialize an Object in Java
+## Declaring Classes
 
 ```java
+class MyClass {
+    // field, constructor, and 
+    // method declarations
+}
+```
+
+```java
+class MyClass extends MySuperClass implements YourInterface {
+    // field, constructor, and
+    // method declarations
+}
+```
+
+In general, class declarations can include these components, in order:
+1. Modifiers such as <b>public, private, protected, default</b>.
+2. The class name, with the initial letter capitalized by convention.
+3. The name of the class's parent (superclass), if any, preceded by the keyword <b>extends</b>. A class can only extend (subclass) one <b>parent</b>.
+4. A comma-separated list of interfaces implemented by the class, if any, preceded by the keyword <b>implements</b>. A class can implement more than one interface.
+5. The class body, surrounded by braces, {}.
+
+## Declaring Member Variables
+There are several kinds of variables:
+* Member variables in a class — these are called <b>fields</b>.
+* Variables in a method or block of code — these are called <b>local variables</b>.
+* Variables in method declarations — these are called <b>parameters</b>.
+
+The Bicycle class uses the following lines of code to define its fields:
+```java
+public class Bicycle {
+        
+    private int cadence;
+    private int gear;
+    private int speed;
+}
+```
+
+Field declarations are composed of three components, in order:
+* Zero or more modifiers, such as <b>public or private</b>.
+* The field's type.
+* The field's name.
+
+## Access Modifiers
+
+### 1. Private Access Modifier
+A private class member cannot be accessed from outside the class; only members of the same class can access these private members.
+
+### 2. Default Access Modifier (no access modifier specified)
+When we do not mention any access modifier, it is called default access modifier. The scope of this modifier is limited to the package only. This means that if we have a class with the default access modifier in a package, only those classes that are in this package can access this class. No other class outside this package can access this class. Similarly, if we have a default method or data member in a class, it would not be visible in the class of another package.
+
+### 3. Protected Access Modifier
+If a class or its members are declared as protected are only accessible by the classes of the same package and the subclasses present in any package. You can also say that the protected access modifier is similar to default access modifier with one exception that it has visibility in subclasses.
+
+### 4. Public Access Modifier
+If a class or its members are declared as public, they can be accessed from any other class regardless of the package boundary. It is comparable to a public place in the real world, such as a company cafeteria that all employees can use irrespective of their department.
+
+## Defining Methods
+```java
+public double calculateAnswer(double wingSpan, int numberOfEngines, double length, double grossTons) {
+    //do the calculation here
+}
+```
+
+More generally, method declarations have six components, in order:
+* Modifiers—such as public, private, protected, default.
+* The return type—the data type of the value returned by the method, or void if the method does not return a value.
+* The method name—the rules for field names apply to method names as well, but the convention is a little different.
+* The parameter list in parenthesis—a comma-delimited list of input parameters, preceded by their data types, enclosed by parentheses, (). If there are no parameters, you must use empty parentheses.
+* An exception list—to be discussed later.
+* The method body, enclosed between braces—the method's code, including the declaration of local variables, goes here.
+
+## Constructors
+
+### Rules for creating Java constructor
+There are two rules defined for the constructor.
+* Constructor name must be the same as its class name
+* A Constructor must have no explicit return type
+* A Java constructor cannot be abstract, static, final, and synchronized
+
+```java
+package net.javaguides.corejava.oops;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class Student {
-    private String name;
-    private String college;
+    private String name = "Ramesh";
+    private String college = "ABC";
     
+    // default constructor
+    public Student() {
+        super();
+    }
+
+    // parameterized constructor
     public Student(String name, String college) {
+        super();
         this.name = name;
         this.college = college;
     }
@@ -27,90 +118,50 @@ public class Student {
     public void setCollege(String college) {
         this.college = college;
     }
-    
-    public static void main(String[] args) {
-        Student student1 = new Student("Ramesh", "BVB");
-        Student student2 = new Student("Prakash", "GEC");
-        Student student3 = new Student("Pramod", "IIT");
-    }
 }
 ```
 
-Each of these statements has three parts (discussed in detail below):
-* <b>Declaration:</b> The code <b>Student student;</b> declarations that associate a variable name with an object type.
-* <b>Instantiation:</b> The <b>new</b> keyword is a Java operator that creates the object.
-* <b>Initialization:</b> The <b>new</b> operator is followed by a call to a constructor, which initializes the new object.
-
-## Different Ways to Create an Object in Java?
-
-### 1. Using a new keyword
-This is the most popular way of creating an object in Java using a new keyword. This approach every Java Developer knows.
+## More Class Examples in Java
 ```java
-package kope;
+public class Circle {
+    private int xPos;
+    private int yPos;
+    private int radius;
 
-public class Main {
-    public static void main(String[] args) {
-        Student student = new Student("Ramesh", "BVB");
-        Student student2 = new Student("Prakash", "GEC");
-        Student student3 = new Student("Pramod", "IIT");
+    // three overloaded constructors for Circle
+    public Circle(int x, int y, int r) {
+        xPos = x;
+        yPos = y;
+        radius = r;
+    }
+
+    public Circle(int x, int y) {
+        xPos = x;
+        yPos = y;
+        radius = 10; // default radius
+    }
+
+    public Circle() {
+        xPos = 20; // assume some default values for xPos and yPos
+        yPos = 20;
+        radius = 10; // default radius
+    }
+
+    public String toString() {
+        return "center = (" + xPos + "," + yPos + ") and radius = " + radius;
+    }
+
+    public static void main(String[] s) {
+        System.out.println(new Circle());
+        System.out.println(new Circle(50, 100));
+        System.out.println(new Circle(25, 50, 5));
     }
 }
-```
 
-### 2. Using newInstance() method of Class class
-The newInstance() method from the Class class was deprecated in Java 9 and was eventually removed in Java 11.
-
-### 3. Using newInstance() method of Constructor class 
-The newInstance() method from the Class class was deprecated in Java 9 and was eventually removed in Java 11.
-
-### 4. Using Object Deserialization
-In this approach, we will be using Serializable interface in Java which is a marker interface(interface with no fields or methods within it)
-
-### 5. Using Object Cloning – clone() method
-The clone() method is used to create a copy of an existing object, in order to the clone() method the corresponding class should have implemented a Cloneable interface which is again a Marker Interface. 
-
-## java.lang.Object Class in Java
-
-In Java, java.lang.Object is the root class of the Java class hierarchy. Every class in Java implicitly or explicitly extends the Object class. This means that Object is the ultimate superclass of all classes in Java. It provides a common set of methods and behaviors that are inherited by all objects, making it a fundamental part of the Java language.
-
-Here are some of the key methods and behaviors provided by the Object class:
-
-* equals(Object obj): This method is used to compare the current object with another object for equality. The default implementation in the Object class checks for reference equality. Subclasses often override this method to provide custom equality checks.
-
-* hashCode(): This method returns a hash code value for the object. It is used by data structures like hash tables.
-
-* toString(): This method returns a string representation of the object. The default implementation in Object returns the class name followed by an "@" sign and the hash code.
-
-* getClass(): This method returns the runtime class of the object. It is often used to obtain information about the class of an object.
-
-* notify(), notifyAll(), and wait(): These methods are used for inter-thread communication and synchronization. They allow one or more threads to communicate and coordinate their activities.
-
-* finalize(): This method is called by the garbage collector before an object is reclaimed. It can be overridden to perform cleanup tasks.
-
-* clone(): This method is used to create a copy of the object. It allows objects to be cloned if they implement the Cloneable interface.
-
-* wait(long timeout), wait(long timeout, int nanos), and wait(): These methods are part of the inter-thread communication mechanism and are used to make a thread wait for a condition to be met.
-
-While the Object class provides default implementations for these methods, they are often overridden in subclasses to customize their behavior.
-
-Because every class in Java inherits from Object, it means that you can use the methods defined in the Object class with any object. For example, you can call toString() or equals() on any Java object.
-
-Here's an example of using some of these methods:
-
-```java
-public class ObjectDemo {
-    public static void main(String[] args) {
-        Object obj1 = new Object();
-        Object obj2 = new Object();
-
-        System.out.println(obj1.equals(obj2));  // false
-        System.out.println(obj1.hashCode());    // a unique hash code
-        System.out.println(obj1.toString());    // returns the class name and hash code
-    }
-}
+// Output : 
+// center = (20,20) and radius = 10
+// center = (50,100) and radius = 10
+// center = (25,50) and radius = 5
 ```
 
 ---
-
-
-
